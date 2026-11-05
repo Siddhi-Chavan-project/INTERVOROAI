@@ -5,7 +5,7 @@ import "../styles/Register.css";
 
 function Register() {
   const navigate = useNavigate();
-
+const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -16,17 +16,24 @@ function Register() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await API.post("/auth/register", user);
-      alert("Registration successful");
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-      alert("Registration failed");
-    }
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (loading) return;
+
+  setLoading(true);
+
+  try {
+    await API.post("/auth/register", user);
+    alert("Registration successful");
+    navigate("/login");
+  } catch (error) {
+    console.log(error);
+    alert("Registration failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="register-page">
@@ -115,7 +122,9 @@ function Register() {
             required
           />
 
-          <button type="submit">Register</button>
+         <button type="submit" disabled={loading}>
+  {loading ? "Registering..." : "Register"}
+</button>
         </form>
 
         <p className="register-login">

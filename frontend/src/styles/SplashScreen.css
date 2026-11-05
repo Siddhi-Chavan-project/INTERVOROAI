@@ -1,0 +1,139 @@
+
+.splash-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #070b1c;
+    opacity: 1;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.splash-exit {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.splash-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: splashAppear 0.8s ease forwards;
+}
+
+.splash-logo {
+    width: 85px;
+    height: 85px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #2563eb, #9333ea);
+    box-shadow: 0 0 45px rgba(99, 102, 241, 0.55);
+    animation: logoPulse 2s infinite ease-in-out;
+}
+
+.splash-logo-icon {
+    color: white;
+    font-size: 48px;
+}
+
+.splash-content h1 {
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    margin: 0;
+}
+
+.splash-content h1 span {
+    color: #8b7cff;
+}
+
+.splash-tagline {
+    color: #aab5d5;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin-top: 13px;
+}
+
+.splash-loader {
+    width: 190px;
+    height: 4px;
+    margin: 35px auto 15px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #202b48;
+}
+
+.splash-loader span {
+    display: block;
+    width: 40%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #3b82f6, #a855f7);
+    animation: loadingMove 1.3s infinite ease-in-out;
+}
+
+.splash-loading {
+    color: #7583a8;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.splash-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.18;
+}
+
+.splash-glow-one {
+    background: #2563eb;
+    top: -130px;
+    left: -100px;
+}
+
+.splash-glow-two {
+    background: #9333ea;
+    bottom: -150px;
+    right: -100px;
+}
+
+@keyframes loadingMove {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(350%); }
+}
+
+@keyframes logoPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+@keyframes splashAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .splash-content h1 {
+        font-size: 29px;
+    }
+
+    .splash-logo {
+        width: 72px;
+        height: 72px;
+    }
+}

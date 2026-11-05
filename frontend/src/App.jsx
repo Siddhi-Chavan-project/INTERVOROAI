@@ -1,10 +1,10 @@
-
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-
+import SplashScreen from "./components/SplashScreen";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -23,11 +23,20 @@ import Report from "./pages/Report";
 import ConceptTransfer from "./pages/ConceptTransfer";
 
 function App() {
+    const [showSplash, setShowSplash] = useState(true);
     return (
         <BrowserRouter>
             <ScrollToTop />
             <Navbar />
+<>
+    {showSplash && (
+        <SplashScreen
+            onFinish={() => setShowSplash(false)}
+        />
+    )}
 
+    {/* Keep all your existing Routes here */}
+</>
             <Routes>
                 {/* Public Pages */}
                 <Route path="/" element={<Home />} />

@@ -5,6 +5,7 @@ import "../styles/CreateInterview.css";
 function CreateInterview() {
 
     const navigate = useNavigate();
+const [loading, setLoading] = useState(false);
 
     const [interview, setInterview] = useState({
         role: "",
@@ -22,45 +23,48 @@ function CreateInterview() {
     };
 
     const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
+    if (loading) return;
 
-        try {
+    setLoading(true);
 
-            const payload = {
-                role: interview.role,
-                experience: interview.experience,
-                difficulty: interview.difficulty,
-                technology: interview.technology
-                    .split(",")
-                    .map((tech) => tech.trim()),
-                number_of_questions: Number(interview.number_of_questions)
-            };
+    try {
 
-            const res = await API.post(
-                "/interview/create",
-                payload
-            );
+        const payload = {
+            role: interview.role,
+            experience: interview.experience,
+            difficulty: interview.difficulty,
+            technology: interview.technology
+                .split(",")
+                .map((tech) => tech.trim()),
+            number_of_questions: Number(interview.number_of_questions)
+        };
 
-            alert("Interview Created Successfully");
+        const res = await API.post(
+            "/interview/create",
+            payload
+        );
 
-            console.log(res.data);
+        alert("Interview Created Successfully");
 
-            navigate(`/interview/${res.data.interview_id}`);
+        console.log(res.data);
 
-        } catch (error) {
+        navigate(`/interview/${res.data.interview_id}`);
 
-            console.log(error);
+    } catch (error) {
 
-            alert(
-                error.response?.data?.detail ||
-                "Failed to create interview"
-            );
+        console.log(error);
 
-        }
+        alert(
+            error.response?.data?.detail ||
+            "Failed to create interview"
+        );
 
-    };
-
+    } finally {
+        setLoading(false);
+    }
+};
     return (
  <div className="page-container">
         <div className="create-interview-container">
@@ -127,10 +131,9 @@ function CreateInterview() {
     />
 
 
-    <button type="submit"
-   >
-        Start Interview
-    </button>
+  <button type="submit" disabled={loading}>
+    {loading ? "Creating Interview..." : "Start Interview"}
+</button>
 
 </form>
 
